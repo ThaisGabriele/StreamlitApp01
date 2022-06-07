@@ -1,0 +1,6 @@
+matplotlib==3.4.2
+numpy==1.21.0
+pandas==1.2.4
+plotly==5.6.0
+streamlit==1.9.2
+streamlit-aggrid==0.2.3.post2
