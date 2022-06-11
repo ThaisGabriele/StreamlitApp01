@@ -7,6 +7,9 @@ import pandas as pd
 
 #from st_aggrid import AgGrid
 
+st.set_page_config(layout="wide")
+
+
 header = st.container()
 team_details = st.container()
 
@@ -200,7 +203,6 @@ def page_config():
 #### Starts here!
 
 with header:
-    page_config()
     st.title("Welcome to my VNL 2022 app!")
     st.text("Another way to check the numbers from the competition - team by team")
     st.markdown("""
