@@ -5,15 +5,15 @@ import pandas as pd
 #import plotly.express as px
 #import plotly.graph_objs as go
 
-from st_aggrid import AgGrid
+#from st_aggrid import AgGrid
 
 header = st.container()
 team_details = st.container()
 
-with open('style.css') as f:
-    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+#with open('style.css') as f:
+#    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
     
-
+   
 @st.cache
 def load_scorers():
     
@@ -57,7 +57,8 @@ def get_attackers(sigla):
 
     df = df.drop(columns=['ShirtNumber','Team'])
 
-    AgGrid(df)
+    #AgGrid(df)
+    st.dataframe(df)
 
 def get_receivers(sigla):
     
@@ -81,8 +82,8 @@ def get_receivers(sigla):
     df = best_receivers.loc[(best_receivers['Team'] == sigla) & (best_receivers['TotalAttempts'] > 0)]
     
     df = df.drop(columns=['ShirtNumber','Team'])
-
-    AgGrid(df)
+    #AgGrid(df)
+    st.dataframe(df)
     
 def get_diggers(sigla):
     
@@ -106,8 +107,8 @@ def get_diggers(sigla):
     df = best_diggers.loc[(best_diggers['Team'] == sigla) & (best_diggers['TotalAttempts'] > 0)]
     
     df = df.drop(columns=['ShirtNumber','Team'])
-
-    AgGrid(df)
+    #AgGrid(df)
+    st.dataframe(df)
 
     
 def get_blockers(sigla):
@@ -130,8 +131,8 @@ def get_blockers(sigla):
     df = best_blockers.loc[(best_blockers['Team']==sigla) & (best_blockers['TotalAttempts'] > 0)]
     
     df = df.drop(columns=['ShirtNumber','Team'])
-    
-    AgGrid(df)
+    #AgGrid(df)
+    st.dataframe(df)
 
 def get_servers(sigla):
     
@@ -153,8 +154,8 @@ def get_servers(sigla):
     df = best_servers.loc[(best_servers['Team']==sigla) & (best_servers['TotalAttempts'] > 0)]
     
     df = df.drop(columns=['ShirtNumber','Team'])        
-    
-    AgGrid(df)
+    #AgGrid(df)
+    st.dataframe(df)
 
 def players_by_team(df_scorers, sigla):  
     
@@ -173,8 +174,8 @@ def players_by_team(df_scorers, sigla):
 
     st.markdown(""" **Players Stats** """)
     del players['Team']
-
-    AgGrid(players)
+    #AgGrid(players)
+    st.dataframe(players)
 
 def show_skill_tables(code):
     
@@ -206,7 +207,7 @@ with header:
     
 with team_details:
     
-    st.title("Choose a team:")
+    st.title("Choose a team!")
     
     team = st.selectbox(
      '',

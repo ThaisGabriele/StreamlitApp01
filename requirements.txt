@@ -1,7 +1,6 @@
 numpy==1.21.0
 pandas==1.2.4
 streamlit==1.9.2
-streamlit-aggrid==0.2.3.post2
 lxml==4.6.4
 Markdown==3.3.6
 style==1.1.0
