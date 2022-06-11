@@ -212,7 +212,7 @@ with header:
     
 with team_details:
     
-    st.title("Choose a team!")
+    st.title("Choose a team: ")
     
     team = st.selectbox(
      '',
