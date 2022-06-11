@@ -193,11 +193,14 @@ def show_skill_tables(code):
     
     st.markdown(""" **Serving** """)
     get_servers(code)
-        
+
+def page_config():
+    st.set_page_config(layout="wide")
         
 #### Starts here!
 
 with header:
+    page_config()
     st.title("Welcome to my VNL 2022 app!")
     st.text("Another way to check the numbers from the competition - team by team")
     st.markdown("""
