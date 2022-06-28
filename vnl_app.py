@@ -17,7 +17,6 @@ team_details = st.container()
 #    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
     
    
-@st.cache
 def load_scorers():
     
     url = "https://en.volleyballworld.com/volleyball/competitions/vnl-2022/statistics/women/best-scorers/"
@@ -98,11 +97,11 @@ def get_diggers(sigla):
         'Shirt NumberShirt': 'ShirtNumber',
         'Player NamePlayer':'PlayerName', 
         'TeamTeam':'Team',
-         'SuccessfulSuccessful':'Sucessful',
+        'SuccessfulSuccessful':'Sucessful',
         'Digsgreat-save':'Digs',
         'ErrorsSE':'Errors', 
         'ReceptionsRec':'Receptions',
-         'Average per matchaverage-per-match':'AveragePerMatch',
+        'Average per matchaverage-per-match':'AveragePerMatch',
         'Success %Success %':'Success%', 
         'TotalTA':'TotalAttempts'
     })
