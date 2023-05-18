@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 # interactive plots
-import plotly.express as px
+#import plotly.express as px
 import plotly.graph_objs as go
 
 #from st_aggrid import AgGrid
