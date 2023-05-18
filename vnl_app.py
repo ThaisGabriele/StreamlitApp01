@@ -2,15 +2,12 @@ import streamlit as st
 import pandas as pd
 
 # interactive plots
-#import plotly.express as px
 import plotly.graph_objs as go
 
-#from st_aggrid import AgGrid
 st.set_page_config(layout="centered")
 
-
 header = st.container()
-team_ranking, team_details = st.tabs(['Teams general', 'Teams Details'])
+general_stats, teams_details = st.tabs(['General stats', 'Teams details'])
 
 # CSS for tables
 
@@ -45,42 +42,7 @@ cell_properties = [('font-size', '16px'),('text-align', 'center')]
 dfstyle = [{"selector": "th", "props": heading_properties},
                {"selector": "td", "props": cell_properties}]
 
-# Expander Styling
 
-st.markdown(
-    """
-<style>
-.streamlit-expanderHeader {
- #   font-weight: bold;
-    background: gray;
-    font-size: 18px;
-}
-</style>
-""",
-    unsafe_allow_html=True,
-)
-    
-def color_metrics_perc(val):
-    if val >= 40.0:
-        color = '#95ecb0'
-    elif val < 40.0 and val > 35.0:
-        color = '#ffef9f'
-    else:
-        color = '#ffe5ec'
-    
-    return 'background-color: %s' % color
-
-def color_metrics_ef(val):
-    if val >= 30.0:
-        color = '#174d2e'
-    else:
-        color = '#6b1c1c'
-    
-    return 'background-color: %s' % color
-
-
-#with open('style.css') as f:
-#    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
     
 def get_df_sets(df_scorers):
     
@@ -132,7 +94,7 @@ def interactive_plot_attack(teams):
                 y = teams.AttackPerSet,
                 x = teams.Team,
                 name = "Attack",
-                marker = dict(color = 'rgba(255, 174, 255, 0.5)',
+                marker = dict(color = 'rgba(255, 174, 255, 0.9)',
                              line=dict(color='rgb(0,0,0)',width=1.9)),
                 text = teams.AttackPerSet)
     data = [trace1]
@@ -147,17 +109,13 @@ def interactive_plot_attack(teams):
 
 def interactive_plot_block(teams):
     
-    
-    #plot = px.bar(teams.sort_values("BlockPerSet"), x='BlockPerSet', y = 'Team')
     teams = teams.sort_values("BlockPerSet", ascending=False).head(10)
     
-    
-    # create trace2 
     trace1 = go.Bar(
                     y = teams.BlockPerSet,
                     x = teams.Team,
                     name = "Block",
-                    marker = dict(color = 'rgba(255, 255, 128, 0.5)',
+                    marker = dict(color = 'rgba(255, 255, 128, 0.9)',
                                   line=dict(color='rgb(0,0,0)',width=1.9)),
                     text = teams.BlockPerSet)
     data = [trace1]
@@ -176,13 +134,13 @@ def interactive_plot_serve(teams):
                     y = teams.ServePerSet,
                     x = teams.Team,
                     name = "Serve",
-                    marker = dict(color = 'rgba(170, 255, 128, 0.5)',
+                    marker = dict(color = 'rgba(170, 255, 128, 0.9)',
                                   line=dict(color='rgb(0,0,0)',width=1.9)),
                     text = teams.ServePerSet)
     data = [trace1]
     layout = go.Layout(
         font=dict(family='Courier New, monospace', size=12, color='#000000'),
-        title='Serves/Set')
+        title='Aces/Set')
     
     fig = go.Figure(data = data, layout = layout)
     st.plotly_chart(fig)
@@ -233,11 +191,6 @@ def get_attackers(sigla):
 
     df = df.drop(columns=['ShirtNumber','Team'])
 
-
-    df = (df.style.set_properties(**{'background': 'white', 'border': '0.5px solid'})
-                  .set_table_styles(dfstyle)
-                  .applymap(color_metrics_perc, subset=pd.IndexSlice[:, ['Success%']])
-    )
     #AgGrid(df, width=890)
     st.dataframe(df)
 
@@ -342,7 +295,6 @@ def players_by_team(df_scorers, sigla):
     
     players = df_scorers.loc[df_scorers['Team']==sigla]
     
-    
     del players['ShirtNumber']
         
     st.markdown(""" **Team Stats** """)
@@ -355,7 +307,6 @@ def players_by_team(df_scorers, sigla):
 
     st.markdown(""" **Players Stats** """)
     del players['Team']
-    #AgGrid(players,width=780)
     st.dataframe(players)
 
 def show_skill_tables(code):
@@ -376,10 +327,6 @@ def show_skill_tables(code):
     get_servers(code)
 
     
-
-#def page_config():
- #   st.set_page_config(layout="centered")
-        
 #### Starts here!
 
 with header:
@@ -388,12 +335,9 @@ with header:
     st.markdown("""
     *All data collected from the [official website of the competition](https://en.volleyballworld.com/volleyball/competitions/vnl-2022/statistics/women/best-scorers/)* 
     """)
-
     
-with team_ranking:
-   # st.markdown(""" **Team Details** """)
+with general_stats:
 
-    
     df_scorers = load_scorers()
     
     df_scorers = df_scorers.filter(items=['Team', 'Attack Points','Block Points', 'Serve Points']).groupby("Team").sum()
@@ -424,19 +368,13 @@ with team_ranking:
 
     new_df = get_skills_per_sets(df_scorers)
 
-    #st.header("Attacks/sets")
-
     interactive_plot_attack(new_df)
-
-    #st.header("Blocks/sets")
 
     interactive_plot_block(new_df)
 
-    #st.header("Serves/sets")
-
     interactive_plot_serve(new_df)   
     
-with team_details:
+with teams_details:
     
     st.title("Choose a team: ")
     
