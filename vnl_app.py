@@ -8,7 +8,7 @@ import plotly.express as px
 st.set_page_config(layout="wide")
 
 header = st.container()
-general_stats, teams_details, stats_by_position = st.tabs(['General stats', 'Teams details',  'Stats by Position'])
+general_stats, teams_details= st.tabs(['General stats', 'Teams details'])
 # get_df_sets() - get from standings the amount of sets won and lost by each team, with these two values we calculate the amount of sets played  
 def get_df_sets(df_scorers):
     
